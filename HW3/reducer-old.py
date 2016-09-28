@@ -47,4 +47,7 @@ for line in sys.stdin:
         if PR == 0:
             current_value.append(value)
 if current_key == key:
-    print '%s %s %f' % (current_key, current_value.pop(), current_PR)
+    try:
+        print '%s %s %f' % (current_key, current_value.pop(), current_PR)
+    except:
+        print '%s %s %f' % (current_key, value, current_PR)
