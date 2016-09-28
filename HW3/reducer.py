@@ -17,8 +17,10 @@ for line in sys.stdin:
         if key not in answer_dict:
             if key not in pg_dict:
                 pg_dict[key] = PR
+                print 'Creating pg_dict: ', key, pg_dict[key]
             else:
                 pg_dict[key] += PR
+                print 'Appending to pg_dict:', key, pg_dict[key]
         else:
             answer_dict[key][1] += PR
     else:
