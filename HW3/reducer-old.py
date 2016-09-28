@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import sys
+import re
 
 current_key = None
 current_value = []
@@ -10,7 +11,7 @@ last_value = None
 
 for line in sys.stdin:
     line = line.strip()
-    line_array = line.split(', ')
+    line_array = re.split('\t|,\ ', line)
     if len(line_array) > 2:
         # ordinary ones
         key, value, PR = line_array
@@ -39,7 +40,8 @@ for line in sys.stdin:
                 current_value.pop()
             else:
                 try:
-                    print '%s %s %f' % (current_key, current_value.pop(), current_PR)
+                    print '%s %s %f' % (current_key, current_value.pop(),
+                                        current_PR)
                 except:
                     pass
         current_key = key
