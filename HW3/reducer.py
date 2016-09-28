@@ -3,11 +3,7 @@
 import sys
 import collections
 
-current_key = None
-current_value = []
-current_PR = 0
-word = None
-last_value = None
+pg_dict = {}
 answer_dict = collections.OrderedDict()
 
 for line in sys.stdin:
@@ -17,11 +13,12 @@ for line in sys.stdin:
         # ordinary ones
         key, value, PR = line_array
         key = key.split('=')[1]
-        value = value.split('=')[1]
         PR = float(PR)
         if key not in answer_dict:
-            current_PR += PR
-            # answer_dict[key] = [None, PR]
+            if key not in pg_dict:
+                pg_dict[key] = PR
+            else:
+                pg_dict[key] += PR
         else:
             answer_dict[key][1] += PR
     else:
@@ -30,8 +27,10 @@ for line in sys.stdin:
         key = key.split('=')[1]
         value = value.split('=')[1]
         if key not in answer_dict:
-            answer_dict[key] = [value, current_PR]
-            current_PR = 0
+            if key in pg_dict:
+                answer_dict[key] = [value, pg_dict[key]]
+            else:
+                answer_dict[key] = [value, 0]
         else:
             raise Exception('I know Python!')
 
