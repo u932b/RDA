@@ -13,7 +13,7 @@ for line in sys.stdin:
     line_array = line.split(', ')
     if len(line_array) > 2:
         # ordinary ones
-        key, value, PR  = line_array
+        key, value, PR = line_array
         key = key.split('=')[1]
         value = value.split('=')[1]
         PR = float(PR)
@@ -43,6 +43,8 @@ for line in sys.stdin:
         current_PR = PR
         if PR == 0:
             current_value.append(value)
-if current_key == key:
-    print '%s %s %f' % (current_key, current_value.pop(), current_PR)
-     
+try:
+    if current_key == key:
+        print '%s %s %f' % (current_key, current_value.pop(), current_PR)
+except:
+    pass
