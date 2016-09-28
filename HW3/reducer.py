@@ -20,7 +20,8 @@ for line in sys.stdin:
         value = value.split('=')[1]
         PR = float(PR)
         if key not in answer_dict:
-            answer_dict[key] = [None, PR]
+            current_PR += PR
+            # answer_dict[key] = [None, PR]
         else:
             answer_dict[key][1] += PR
     else:
@@ -28,11 +29,11 @@ for line in sys.stdin:
         key, value = line_array
         key = key.split('=')[1]
         value = value.split('=')[1]
-        PR = 0
         if key not in answer_dict:
-            answer_dict[key] = [value, PR]
+            answer_dict[key] = [value, current_PR]
+            current_PR = 0
         else:
-            answer_dict[key][0] = value
+            raise Exception('I know Python!')
 
 for item in answer_dict.items():
     print '%s %s %f' % (item[0], item[1][0], item[1][1])
