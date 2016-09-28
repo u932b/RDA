@@ -39,17 +39,11 @@ for line in sys.stdin:
                 last_value = None
                 current_value.pop()
             else:
-                try:
-                    print '%s %s %f' % (current_key, current_value.pop(),
-                                        current_PR)
-                except:
-                    pass
+                print '%s %s %f' % (current_key, current_value.pop(),
+                                    current_PR)
         current_key = key
         current_PR = PR
         if PR == 0:
             current_value.append(value)
 if current_key == key:
-    try:
-        print '%s %s %f' % (current_key, current_value.pop(), current_PR)
-    except:
-        print '%s %s %f' % (current_key, value, current_PR)
+    print '%s %s %f' % (current_key, current_value.pop(), current_PR)
