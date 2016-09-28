@@ -38,7 +38,10 @@ for line in sys.stdin:
                 real_value = None
                 current_value.pop()
             else:
-                print '%s %s %f' % (current_key, current_value.pop(), current_PR)
+                try:
+                    print '%s %s %f' % (current_key, current_value.pop(), current_PR)
+                except:
+                    pass
         current_key = key
         current_PR = PR
         if PR == 0:
