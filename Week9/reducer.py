@@ -22,6 +22,8 @@ for line in sys.stdin:
     #     # ordinary ones
     key, value = line_array
     key = key.split('=')[1]
+    if not current_key:
+        current_key = key
     value = value.split('=')[1]
     global current_min
     global current_max
@@ -62,5 +64,4 @@ for line in sys.stdin:
     #     current_PR = PR
     #     if PR == 0:
 if current_key == key:
-    print 'last_shit:', current_key
     print '%s %s ' % (current_key, (current_max, current_min))
