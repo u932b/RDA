@@ -9,12 +9,8 @@ from datetime import datetime
 current_key = None
 current_max = -(sys.maxint)
 current_min = sys.maxint
-max_value = -(sys.maxint)
-min_value = sys.maxint
 word = None
 last_value = None
-# max_value = -1
-# min_value = -1
 
 
 def isTimeFormat(input):
@@ -43,22 +39,8 @@ for line in sys.stdin:
         value = datetime.strptime(value, '%Y-%m-%d %H:%M:%S.%f').strftime('%s')
     else:
         value = len(value)
-    # else:
-    #     # one's without PR
-    #     key, value = line_array
-    #     key = key.split('=')[1]
-    #     value = value.split('=')[1]
-    #     if current_value:
-    #         # already a value inside
-    #         # print current_key, current_value
-    #         last_value = current_value.pop()
-    #     current_value.append(value)
-    #     # print current_key, current_value
-    #     PR = 0
 
     if current_key == key:
-        global max_value
-        global min_value
         current_max = max(int(current_max), int(value))
         current_min = min(int(current_min), int(value))
     else:
@@ -68,4 +50,6 @@ for line in sys.stdin:
         current_min = sys.maxint
 
 if current_key == key:
+    current_max = max(int(current_max), int(value))
+    current_min = min(int(current_min), int(value))
     print '%s %s ' % (current_key, (current_max, current_min))
