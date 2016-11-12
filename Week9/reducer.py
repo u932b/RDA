@@ -2,19 +2,29 @@
 
 import sys
 import re
+import time
+from datetime import datetime
+
 
 current_key = None
-current_max = -1
-current_min = -1
-max_value = 0
-min_value = 0
+current_max = -(sys.maxint)
+current_min = sys.maxint
+max_value = -(sys.maxint)
+min_value = sys.maxint
 word = None
 last_value = None
 # max_value = -1
 # min_value = -1
 
+
+def isTimeFormat(input):
+    try:
+        time.strptime(input, '%Y-%m-%d %H:%M:%S.%f')
+        return True
+    except ValueError:
+        return False
+
 for line in sys.stdin:
-    # print line
     line = line.strip()
     line_array = re.split('\t|,\ ', line)
     # print line_array
@@ -28,16 +38,11 @@ for line in sys.stdin:
     global current_min
     global current_max
     if value.isdigit():
-        if current_min == -1:
-            current_min = value
-        if current_max == -1:
-            current_max = value
+        pass
+    elif isTimeFormat(value):
+        value = datetime.strptime(value, '%Y-%m-%d %H:%M:%S.%f').strftime('%s')
     else:
         value = len(value)
-        if current_min == -1:
-            current_min = value
-        if current_max == -1:
-            current_max = value
     # else:
     #     # one's without PR
     #     key, value = line_array
@@ -54,14 +59,13 @@ for line in sys.stdin:
     if current_key == key:
         global max_value
         global min_value
-        max_value = max(current_max, value)
-        min_value = min(current_min, value)
+        current_max = max(int(current_max), int(value))
+        current_min = min(int(current_min), int(value))
     else:
-        print '%s %s ' % (current_key, (max_value, min_value))
+        print '%s %s ' % (current_key, (current_max, current_min))
         current_key = key
-        current_max = -1
-        current_min = -1
-    #     current_PR = PR
-    #     if PR == 0:
+        current_max = -(sys.maxint)
+        current_min = sys.maxint
+
 if current_key == key:
     print '%s %s ' % (current_key, (current_max, current_min))
